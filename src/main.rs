@@ -55,13 +55,30 @@ fn ownership() {
     pass_num(n);
     println!("the first number {n}");
     let the_name = String::from("Kara");
+    let mut last_name = String::from("Aung");
+    println!("the original name {the_name} {last_name}");
+    last_name = String::from("Danvers");
     say_hello(&the_name);
-    println!("the original name {the_name}");
+    // the move of ownership happens here
+    let full_name = the_name+ &last_name[..];
+    println!("full name {full_name}");
+    first_word(&last_name);
     fn pass_num(x: i32) {
         println!("it is received in the function {}", x);
     }
     fn say_hello(name: &String) {
         println!("Hello {}", name);
+    }
+
+    fn first_word(s:&String)->usize{
+       let bytes = s.as_bytes();
+        println!("The bytes {:#?}",bytes);
+        for (i,&item) in bytes.iter().enumerate(){
+            if item == b' ' {
+               return i; 
+            }
+        }
+        s.len()
     }
 }
 fn implementing_struct() {
